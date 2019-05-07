@@ -1,13 +1,15 @@
 'use strict';
 
+// https://dog.ceo/api/breed/hound/images/random/3 
 
-function getDogImages(number) {
+function getDogImages(number, breed) {
   console.log(number);
-  fetch(`https://dog.ceo/api/breeds/image/random/${number})`)
+  console.log(breed);
+  fetch(`https://dog.ceo/api/breed/${breed}/images/random/${number})`)
     .then(response => {
       if (response.ok) {
         return response.json();
-      }
+      } 
     })
     .then(response => {
       console.log(response.message);
@@ -23,10 +25,15 @@ function getDogImages(number) {
       console.log(allImages);
     })
     .catch(response => {
+      // Couldn't find end point on API docs for invalid case...
+      // but fail case does enter correctly. not sure how to set new endpoint
+      console.log('fail');
       console.log(response);
     });
   
 }
+
+const store = {};
 
 
 function collectNumberDogs() {
@@ -35,17 +42,16 @@ function collectNumberDogs() {
   $('#js-number-of-dogs').on('submit', function(event) {
     event.preventDefault();
     let number = event.target.number.value;
-    getDogImages(number);
+    let breed = event.target.breed.value;
+    getDogImages(number, breed);
   });
 
- 
+  console.log(store);
 
-  // ^ also replaced 'click' with 'submit' right??????
-
-  // INCLUDE CHECK TO CONFIRM THAT NUMBER IS BETWEEN 1 AND 50
-
-
-  
+  // getDogImages(store.number, store.breed);
+     
 }
+
+
 
 $(collectNumberDogs());
