@@ -3,17 +3,17 @@
 
 function getDogImages() {
   let message = fetch( `https://dog.ceo/api/breeds/image/random/${collectNumberDogs()}`)
-    .then(response => JSON.response())
+    .then(response => response.json())
     .then(response => response.message);
     
     console.log(message);
 
   // ^^ catch invalid?? after
-  let allImages = ''
+  let allImages = '';
 
   // put in all src images with for loop
   for (let i = 0; i < message.length; i++) {
-    allImages += `<img src=${message[i]}" class="individual-image">`;
+    allImages += `<img src="${message[i]}" class="individual-image" />`;
   }
 
   $('.js-all-the-dogs').html(allImages);
@@ -26,6 +26,7 @@ function collectNumberDogs() {
 
   // get number of dogs desired from user
   let numberDogs = $('#js-user-input').on('submit', function(event) {
+    event.preventDefault();
     return $(event.target).val(); 
   });
 
